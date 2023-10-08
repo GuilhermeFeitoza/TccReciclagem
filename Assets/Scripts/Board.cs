@@ -42,7 +42,7 @@ public class Board : MonoBehaviour
     public GameObject titlePrefab;
     private BackgroundTile[,] allTiles;
     public GameObject[] dots;
-
+    private BackgroundTile[,] breakableTiles;
     public TileType[] boardLayout;
     private bool[,] espacosEmBranco;
     public GameObject[,] allDots;
@@ -51,11 +51,13 @@ public class Board : MonoBehaviour
     private ScoreManager scoreManager;
     public int[] scoreGoals;
     public Dot currentDot;
+    public GameObject breakableTilePrefab;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        breakableTiles = new BackgroundTile[width, height];
         findMatches = FindObjectOfType<FindMatches>();
         espacosEmBranco = new bool[width, height];
         allTiles = new BackgroundTile[width, height];
@@ -79,9 +81,24 @@ public class Board : MonoBehaviour
 
 
     }
+    public void CriarFileirasQuebraveis()
+    {
+        for (int i = 0; i < boardLayout.Length; i++)
+        {
+            if (boardLayout[i].tileKind == TileKind.Breakable)
+            {
+                Vector2 tempPosition = new Vector2(boardLayout[i].x, boardLayout[i].y);
+                GameObject tile = Instantiate(breakableTilePrefab,tempPosition,Quaternion.identity);
+                breakableTiles[boardLayout[i].x, boardLayout[i].y] = tile.GetComponent<BackgroundTile>();
+            }
+
+        }
+
+    }
     private void SetUp()
     {
         CriarEspacosEmBranco();
+        CriarFileirasQuebraveis();
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
@@ -123,7 +140,7 @@ public class Board : MonoBehaviour
         {
             for (int j = 0; j < height; j++)
             {
-                if (allDots[i, j] == null)
+                if (allDots[i, j] == null && !espacosEmBranco[i,j])
                 {
                     Vector2 tempPosition = new Vector2(i, j + offSet);
                     int dotToUse = Random.Range(0, dots.Length);
@@ -390,7 +407,7 @@ public class Board : MonoBehaviour
 
             if (row > 1)
             {
-                if (allDots[column, row - 1].tag == piece.tag && allDots[column, row - 2].tag == piece.tag)
+                if (allDots[column, row - 1] != null && allDots[column, row - 2] != null)
                 {
                     if (allDots[column, row - 1].tag == piece.tag && allDots[column, row - 2].tag == piece.tag)
                     {
@@ -404,7 +421,7 @@ public class Board : MonoBehaviour
 
             if (column > 1)
             {
-                if (allDots[column - 1, row].tag == piece.tag && allDots[column - 2, row].tag == piece.tag)
+                if (allDots[column - 1, row] !=null  && allDots[column - 2, row] !=null)
                 {
                     if (allDots[column - 1, row].tag == piece.tag && allDots[column - 2, row].tag == piece.tag)
                     {
@@ -501,6 +518,17 @@ public class Board : MonoBehaviour
             {
                 CheckToMakeBombs();
             }
+
+
+            if(breakableTiles[column,row] != null)
+            {
+
+                breakableTiles[column, row].TakeDamage(1);
+                if(breakableTiles[column,row].hitPoints <= 0)
+                {
+                    breakableTiles[column, row] = null;
+                }
+            }
             findMatches.currentMatches.Remove(allDots[column, row]);
             Destroy(allDots[column, row]);
             allDots[column, row] = null;
@@ -527,11 +555,38 @@ public class Board : MonoBehaviour
 
 
 
-            StartCoroutine(DecreasoRowCo());
+            StartCoroutine(DecreaseRowCo2());
         }
 
     }
 
+    private IEnumerator DecreaseRowCo2()
+    {
+
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                if(!espacosEmBranco[i,j] && allDots[i, j] == null)
+                {
+
+                    for (int k = j+1; k < height; k++)
+                    {
+                        if(allDots[i,j] != null)
+                        {
+                            allDots[i, k].GetComponent<Dot>().row = j;
+                            allDots[i, k] = null;
+                            break;
+                        }
+
+                    }
+                }
+            }
+
+        }
+        yield return new WaitForSeconds(.4f);
+        StartCoroutine(FillBoardCo());
+    }
     private IEnumerator DecreasoRowCo()
     {
         int nullCount = 0;

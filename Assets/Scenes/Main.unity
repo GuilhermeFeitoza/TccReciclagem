@@ -767,7 +767,7 @@ MonoBehaviour:
   currentState: 1
   width: 10
   height: 10
-  offSet: 20
+  offSet: 10
   titlePrefab: {fileID: 8355312307265188875, guid: fa879e883e1ff8e4b9fa6a39d952839d,
     type: 3}
   dots:
@@ -775,10 +775,15 @@ MonoBehaviour:
   - {fileID: 8335995081330989181, guid: 59b89465a2855224886ab811d7bb9259, type: 3}
   - {fileID: 830683597547536699, guid: ea818d91e6d942b459ab25effe134ff6, type: 3}
   - {fileID: 5419353173450928762, guid: ccaa758a352e39d469f93ce93cfb44ee, type: 3}
-  boardLayout: []
+  boardLayout:
+  - x: 0
+    y: 9
+    tileKind: 0
   basePieceValue: 20
-  scoreGoals: e8030000d007000050c30000
+  scoreGoals: e8030000d007000080f0fa02
   currentDot: {fileID: 0}
+  breakableTilePrefab: {fileID: 892215768086054599, guid: 163bf74b8766ed74488575833972ddf8,
+    type: 3}
 --- !u!114 &1738887410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -791,6 +796,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ca821e8621fad14eb97cfde189574bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitPoints: 3
 --- !u!1 &1825721857
 GameObject:
   m_ObjectHideFlags: 0
