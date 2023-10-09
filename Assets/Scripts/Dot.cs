@@ -14,6 +14,7 @@ public class Dot : MonoBehaviour
     public bool isMatched = false;
 
 
+    private HintManager hintManager;
     private FindMatches findMatches;
     private Board board;
     public GameObject otherDot;
@@ -49,6 +50,7 @@ public class Dot : MonoBehaviour
         isRowBomb = false;
         board = FindObjectOfType<Board>();
         findMatches = FindObjectOfType<FindMatches>();
+        hintManager = FindObjectOfType<HintManager>();
     }
 
     // Update is called once per frame
@@ -112,6 +114,11 @@ public class Dot : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (hintManager !=null)
+        {
+            hintManager.DestroyHint();
+        }
+      
         if (board.currentState == GameState.move)
         {
             firstTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);

@@ -52,7 +52,8 @@ public class Board : MonoBehaviour
     public int[] scoreGoals;
     public Dot currentDot;
     public GameObject breakableTilePrefab;
-
+    public GameObject destroyEffect;
+         
 
     // Start is called before the first frame update
     void Start()
@@ -220,7 +221,6 @@ public class Board : MonoBehaviour
     {
         //Armazena a segunda peça e salva ela em um lugar
         GameObject holder = allDots[column + (int)direction.x, row + (int)direction.y] as GameObject;
-
         //trocando a primeira peça pra ser a peça da segunda posição
         allDots[column + (int)direction.x, row + (int)direction.y] = allDots[column, row];
 
@@ -276,7 +276,7 @@ public class Board : MonoBehaviour
 
     }
 
-    private bool SwitchAndCheck(int column, int row, Vector2 direction)
+    public bool SwitchAndCheck(int column, int row, Vector2 direction)
     {
         SwitchPieces(column, row, direction);
         if (CheckForMatches())
@@ -530,6 +530,7 @@ public class Board : MonoBehaviour
                 }
             }
             findMatches.currentMatches.Remove(allDots[column, row]);
+            Instantiate(destroyEffect,allDots[column,row].transform.position,Quaternion.identity);
             Destroy(allDots[column, row]);
             allDots[column, row] = null;
             scoreManager.IncreaseScore(basePieceValue * streakValue);
@@ -562,18 +563,18 @@ public class Board : MonoBehaviour
 
     private IEnumerator DecreaseRowCo2()
     {
-
+        yield return new WaitForSeconds(.5f);
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
             {
                 if(!espacosEmBranco[i,j] && allDots[i, j] == null)
                 {
-
+                   
                     for (int k = j+1; k < height; k++)
                     {
                         if(allDots[i,j] != null)
-                        {
+                        { 
                             allDots[i, k].GetComponent<Dot>().row = j;
                             allDots[i, k] = null;
                             break;
