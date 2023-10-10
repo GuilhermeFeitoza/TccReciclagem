@@ -52,6 +52,7 @@ public class Board : MonoBehaviour
     public int[] scoreGoals;
     public Dot currentDot;
     public GameObject breakableTilePrefab;
+    public float refilDelay = 0.5f; 
     public GameObject destroyEffect;
          
 
@@ -147,6 +148,7 @@ public class Board : MonoBehaviour
                 {
                     Vector2 tempPosition = new Vector2(i, j + offSet);
                     int dotToUse = Random.Range(0, dots.Length);
+                    
                     int maxIterations = 0;
 
                     while (MatchesAt(i, j, dots[dotToUse]) && maxIterations < 100)
@@ -196,22 +198,23 @@ public class Board : MonoBehaviour
         //Preenche o tabuleiro
 
         RefillBoard();
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(refilDelay);
         while (MatchesOnBoard())
         {
 
             streakValue += 1;
-            yield return new WaitForSeconds(.5f);
             DestroyMatches();
+            yield return new WaitForSeconds(2*refilDelay);
+          
         }
         findMatches.currentMatches.Clear();
         //Só pode se mover depois do tabuleiro terminar de preencher os vazios deixados por ter acertado
         streakValue = 1;
         currentDot = null;
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(2*refilDelay);
         if (IsDeadLocked())
         {
-            //ShuffleBoard();
+            StartCoroutine(ShuffleBoard());
             Debug.Log("Deeadlocked");
         }
         currentState = GameState.move;
@@ -331,9 +334,9 @@ public class Board : MonoBehaviour
         return true;
     }
 
-    private void ShuffleBoard()
+    private IEnumerator ShuffleBoard()
     {
-
+        yield return new WaitForSeconds(0.5f);
         List<GameObject> newBoard = new List<GameObject>();
 
         for (int i = 0; i < width; i++)
@@ -350,6 +353,8 @@ public class Board : MonoBehaviour
             }
 
         }
+
+        yield return new WaitForSeconds(0.4f);
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
@@ -575,7 +580,7 @@ public class Board : MonoBehaviour
                    
                     for (int k = j+1; k < height; k++)
                     {
-                        if(allDots[i,j] != null)
+                        if(allDots[i,k] != null)
                         { 
                             allDots[i, k].GetComponent<Dot>().row = j;
                             allDots[i, k] = null;
@@ -587,7 +592,7 @@ public class Board : MonoBehaviour
             }
 
         }
-        yield return new WaitForSeconds(.4f);
+        yield return new WaitForSeconds(refilDelay * 0.5f);
         StartCoroutine(FillBoardCo());
     }
     private IEnumerator DecreasoRowCo()
