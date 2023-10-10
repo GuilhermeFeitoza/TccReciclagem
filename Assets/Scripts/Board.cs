@@ -107,8 +107,10 @@ public class Board : MonoBehaviour
                 if (!espacosEmBranco[i, j])
                 {
                     Vector2 tempPosition = new Vector2(i, j + offSet);
+                    Vector2 tilePosition = new Vector2(i, j);
+                  
 
-                    GameObject backgroundTile = Instantiate(titlePrefab, tempPosition, Quaternion.identity) as GameObject;
+                    GameObject backgroundTile = Instantiate(titlePrefab, tilePosition, Quaternion.identity) as GameObject;
                     backgroundTile.transform.parent = this.transform;
                     backgroundTile.name = "(" + i + "," + j + ")";
                     int dotToUse = Random.Range(0, dots.Length);
