@@ -49,6 +49,7 @@ public class Board : MonoBehaviour
     public int basePieceValue = 20;
     private int streakValue = 1;
     private ScoreManager scoreManager;
+    private SoundManager soundManager;
     public int[] scoreGoals;
     public Dot currentDot;
     public GameObject breakableTilePrefab;
@@ -59,6 +60,7 @@ public class Board : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        soundManager = FindObjectOfType<SoundManager>();
         breakableTiles = new BackgroundTile[width, height];
         findMatches = FindObjectOfType<FindMatches>();
         espacosEmBranco = new bool[width, height];
@@ -537,6 +539,11 @@ public class Board : MonoBehaviour
                 }
             }
             findMatches.currentMatches.Remove(allDots[column, row]);
+            if(soundManager != null)
+            {
+                soundManager.PlayRandomDestroyNoise();
+
+            }
             Instantiate(destroyEffect,allDots[column,row].transform.position,Quaternion.identity);
             Destroy(allDots[column, row]);
             allDots[column, row] = null;
