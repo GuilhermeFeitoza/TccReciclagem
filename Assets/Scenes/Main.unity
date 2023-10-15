@@ -990,8 +990,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -164.15678, y: 384.2}
-  m_SizeDelta: {x: 159.3464, y: 100}
+  m_AnchoredPosition: {x: -165.77994, y: 386.8}
+  m_SizeDelta: {x: 168.4301, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1152644094
 MonoBehaviour:
@@ -1194,8 +1194,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -138, y: 413.24}
-  m_SizeDelta: {x: 125.97, y: 61.2421}
+  m_AnchoredPosition: {x: 5.4399, y: 414.98}
+  m_SizeDelta: {x: 179.847, y: 57.7661}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1471584239
 MonoBehaviour:
@@ -1219,18 +1219,18 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 45
+    m_FontSize: 30
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 270
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 000
+  m_Text: 000000000
 --- !u!222 &1471584240
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1332,6 +1332,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c836da04a6d78c5428cf3c34889bc8ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  world: {fileID: 11400000, guid: ad73f529850cf2640a2a95f7f62cb7fb, type: 2}
   currentState: 1
   width: 10
   height: 10
@@ -1345,7 +1346,7 @@ MonoBehaviour:
   - {fileID: 5419353173450928762, guid: ccaa758a352e39d469f93ce93cfb44ee, type: 3}
   boardLayout: []
   basePieceValue: 20
-  scoreGoals: e8030000d007000080f0fa02
+  scoreGoals: e8030000d007000088130000
   currentDot: {fileID: 0}
   breakableTilePrefab: {fileID: 892215768086054599, guid: 163bf74b8766ed74488575833972ddf8,
     type: 3}

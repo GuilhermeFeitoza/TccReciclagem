@@ -33,15 +33,26 @@ public class TileType
 
 public class Board : MonoBehaviour
 {
+    [Header("Scriptable Object")]
+    public World world;
+    public int level;
 
-    public GameState currentState = GameState.move;
+
+    [Header("Board Dimensions")]
     public int width;
     public int height;
     public int offSet;
-    private FindMatches findMatches;
+
+    [Header("Prefabs")]
+    public GameObject breakableTilePrefab;
     public GameObject titlePrefab;
-    private BackgroundTile[,] allTiles;
     public GameObject[] dots;
+    public GameObject destroyEffect;
+
+
+    [Header("Layout")]
+    private BackgroundTile[,] allTiles;
+    private FindMatches findMatches;
     private BackgroundTile[,] breakableTiles;
     public TileType[] boardLayout;
     private bool[,] espacosEmBranco;
@@ -52,10 +63,11 @@ public class Board : MonoBehaviour
     private SoundManager soundManager;
     public int[] scoreGoals;
     public Dot currentDot;
-    public GameObject breakableTilePrefab;
+
     public float refilDelay = 0.5f; 
-    public GameObject destroyEffect;
-         
+ 
+    public GameState currentState = GameState.move;
+
 
     // Start is called before the first frame update
     void Start()
@@ -70,6 +82,23 @@ public class Board : MonoBehaviour
         SetUp();
 
 
+    }
+
+    private void Awake()
+    {
+        if(world != null)
+        {
+            if(world.levels[level] != null)
+            {
+                width = world.levels[level].width;
+                height = world.levels[level].height;
+                dots = world.levels[level].dots;
+                scoreGoals = world.levels[level].scoreGoals;
+                boardLayout = world.levels[level].boardLayout;
+
+            }
+
+        }
     }
 
     public void CriarEspacosEmBranco()
