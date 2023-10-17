@@ -236,45 +236,25 @@ public class Dot : MonoBehaviour
         {
             ////Move pra direita
 
-            //otherDot = board.allDots[column + 1, row];
-            //previousRow = row;
-            //previousColumn = column;
-            //otherDot.GetComponent<Dot>().column -= 1;
-            //column += 1;
-            //StartCoroutine(CheckMoveCo());
+          
             MovePiecesActual(Vector2.right);
         }
         else if (swipeAngle > 45 && swipeAngle <= 135 && row < board.height - 1)
         {
 
             ////Move para cima
-            //otherDot = board.allDots[column, row + 1];
-            //previousRow = row;
-            //previousColumn = column;
-            //otherDot.GetComponent<Dot>().row -= 1;
-            //row += 1;
-            //StartCoroutine(CheckMoveCo());
+         
             MovePiecesActual(Vector2.up);
         }
         else if (swipeAngle > 135 || swipeAngle <= -135 && column > 0)
         {
             ////Move pra esquerda
-            //otherDot = board.allDots[column - 1, row];
-            //previousRow = row;
-            //previousColumn = column;
-            //otherDot.GetComponent<Dot>().column += 1;
-            //column -= 1;
-            //StartCoroutine(CheckMoveCo());
+           
             MovePiecesActual(Vector2.left);
         }
         else if (swipeAngle < -45 && swipeAngle >= -135 && row > 0)
         {
-            //otherDot = board.allDots[column, row - 1];
-            //previousRow = row;
-            //previousColumn = column;
-            //otherDot.GetComponent<Dot>().row += 1;
-            //row -= 1;
-            //StartCoroutine(CheckMoveCo());
+           //Move pra baixo
             MovePiecesActual(Vector2.down);
         }
         else

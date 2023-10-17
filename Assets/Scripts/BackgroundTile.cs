@@ -6,32 +6,23 @@ public class BackgroundTile : MonoBehaviour
 {
     public int hitPoints;
     private SpriteRenderer sprite;
-    
- 
     // Start is called before the first frame update
     void Start()
     {
         sprite = GetComponent<SpriteRenderer>();
         Initialize();
     }
-
     // Update is called once per frame
     void Update()
     {
         if(hitPoints <= 0)
         {
-
-
             Destroy(this.gameObject);
-
-
         }
-        
     }
 
     void Initialize()
     {
-
        
     }
     public void TakeDamage(int damage)

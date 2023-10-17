@@ -11,7 +11,6 @@ public class SoundManager : MonoBehaviour
         int clipToPlay = Random.Range(0, destroyNoise.Length);
         destroyNoise[clipToPlay].Play();
     
-    
     }
 
     public void PlayMoveNoise() {
