@@ -14,6 +14,7 @@ public class Dot : MonoBehaviour
     public bool isMatched = false;
 
 
+    private EndGameManager endGameManager;
     private HintManager hintManager;
     private FindMatches findMatches;
     private SoundManager soundManager;
@@ -55,7 +56,9 @@ public class Dot : MonoBehaviour
         findMatches = FindObjectOfType<FindMatches>();
         hintManager = FindObjectOfType<HintManager>();
         soundManager = FindObjectOfType<SoundManager>();
+        endGameManager = FindObjectOfType<EndGameManager>();
     }
+
 
     // Update is called once per frame
     void Update()
@@ -164,7 +167,13 @@ public class Dot : MonoBehaviour
                 board.currentState = GameState.move;
             }
             else
-            {
+            {   if (endGameManager != null) {
+                    if (endGameManager.requirements.gameType == GameType.Moves) {
+
+                        endGameManager.DecreaseCounterValue();
+                    
+                    }
+                }
                 board.DestroyMatches();
             }
             // otherDot = null;

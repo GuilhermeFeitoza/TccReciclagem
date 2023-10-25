@@ -61,6 +61,7 @@ public class Board : MonoBehaviour
     private int streakValue = 1;
     private ScoreManager scoreManager;
     private SoundManager soundManager;
+    private GoalManager goalManager;
     public int[] scoreGoals;
     public Dot currentDot;
 
@@ -72,6 +73,7 @@ public class Board : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        goalManager = FindObjectOfType<GoalManager>();
         soundManager = FindObjectOfType<SoundManager>();
         breakableTiles = new BackgroundTile[width, height];
         findMatches = FindObjectOfType<FindMatches>();
@@ -568,6 +570,15 @@ public class Board : MonoBehaviour
                 }
             }
             findMatches.currentMatches.Remove(allDots[column, row]);
+
+
+            if (goalManager != null)
+            {
+
+                goalManager.CompareGoal(allDots[column, row].tag.ToString());
+                goalManager.UpdateGoals();
+
+            }
             if(soundManager != null)
             {
                 soundManager.PlayRandomDestroyNoise();
