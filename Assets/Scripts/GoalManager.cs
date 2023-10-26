@@ -20,11 +20,16 @@ public class GoalManager : MonoBehaviour
     public GameObject goalPrefab;
     public GameObject goalIntroParent;
     public GameObject goalGameParent;
+    private EndGameManager endGame;
+    private Board board;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        board = FindObjectOfType<Board>();
+        endGame = FindObjectOfType<EndGameManager>();
+        GetGoals();
         SetupGoals();
     }
 
@@ -52,6 +57,25 @@ public class GoalManager : MonoBehaviour
 
     }
 
+    void GetGoals() {
+        if (board != null)
+        {
+            if (board.world != null)
+            {
+                if (board.level < board.world.levels.Length)
+                {
+                    if (board.world.levels[board.level] != null)
+                    {
+
+                        levelGoals = board.world.levels[board.level].levelGoals;
+                    }
+                }
+
+            }
+        }
+    
+    }
+
        public void UpdateGoals()
     {
         int goalsCompleted = 0;
@@ -67,7 +91,10 @@ public class GoalManager : MonoBehaviour
 
         if (goalsCompleted >= levelGoals.Length)
         {
-            Debug.Log("Ganhou");
+            if (endGame !=null)
+            {
+                endGame.WinGame();
+            }
         }
     }
     public void CompareGoal(string goalToCompare)

@@ -30,3 +30,11 @@ MonoBehaviour:
   - {fileID: 5419353173450928762, guid: ccaa758a352e39d469f93ce93cfb44ee, type: 3}
   - {fileID: 8335995081330989181, guid: 59b89465a2855224886ab811d7bb9259, type: 3}
   scoreGoals: 640000009001000010270000
+  endGameRequirements:
+    gameType: 0
+    counterValue: 60
+  levelGoals:
+  - numberNeeded: 10
+    numberCollected: 0
+    goalsSprite: {fileID: 21300000, guid: 3610ce06eb8ba8042bb346d8c3822093, type: 3}
+    matchValue: BlueDot

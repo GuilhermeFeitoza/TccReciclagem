@@ -21,16 +21,21 @@ public class EndGameRequirements
 
 public class EndGameManager : MonoBehaviour
 {
+
     public GameObject movesLabel;
     public GameObject timeLabel;
+    public GameObject youWinPanel;
+    public GameObject tryAgainPanel;
     public Text counter;
     public EndGameRequirements requirements;
     public int currentCounterValue;
     public float timerSeconds;
+    private Board board;
     // Start is called before the first frame update
     void Start()
     {
-
+        board = FindObjectOfType<Board>();
+        SetGameType();
         SetupGame();
 
     }
@@ -54,34 +59,71 @@ public class EndGameManager : MonoBehaviour
         counter.text = "" + currentCounterValue;
     }
 
+    public void SetGameType()
+    {
+        if (board.world != null)
+        {
+            if (board.level < board.world.levels.Length)
+            {
+                if (board.world.levels[board.level] != null)
+                {
+                    requirements = board.world.levels[board.level].endGameRequirements;
+                }
+            }
+        }
+
+    }
     public void DecreaseCounterValue()
     {
-        currentCounterValue--;
-        counter.text = "" + currentCounterValue;
-        if(currentCounterValue == 0)
+        if (board.currentState != GameState.pause)
         {
-            currentCounterValue = 0;
+
+            currentCounterValue--;
             counter.text = "" + currentCounterValue;
-
+            if (currentCounterValue == 0)
+            {
+                LoseGame();
+            }
         }
-   }
+    }
+
+    public void WinGame()
+    {
+
+        youWinPanel.SetActive(true);
+        board.currentState = GameState.win;
+        PanelController Fade = FindObjectOfType<PanelController>();
+        Fade.GameOver();
+    }
+    public void LoseGame()
+    {
+
+        tryAgainPanel.SetActive(true);
+        board.currentState = GameState.lose;
+        currentCounterValue = 0;
+        counter.text = "" + currentCounterValue;
+        PanelController Fade = FindObjectOfType<PanelController>();
+        Fade.GameOver();
+
+    }
 
 
 
 
 
-    
+
 
 
 
     void Update()
     {
 
-        if(requirements.gameType == GameType.Time && currentCounterValue > 0 )
+        if (requirements.gameType == GameType.Time && currentCounterValue > 0)
         {
             timerSeconds -= Time.deltaTime;
-            if (timerSeconds <= 0) {
-                
+            if (timerSeconds <= 0)
+            {
+
                 DecreaseCounterValue();
                 timerSeconds = 1;
             }

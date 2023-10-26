@@ -6,7 +6,10 @@ using UnityEngine;
 public enum GameState
 {
     wait,
-    move
+    move,
+    win,
+    lose,
+    pause,
 
 
 }
@@ -65,8 +68,8 @@ public class Board : MonoBehaviour
     public int[] scoreGoals;
     public Dot currentDot;
 
-    public float refilDelay = 0.5f; 
- 
+    public float refilDelay = 0.5f;
+
     public GameState currentState = GameState.move;
 
 
@@ -82,22 +85,25 @@ public class Board : MonoBehaviour
         allDots = new GameObject[width, height];
         scoreManager = FindAnyObjectByType<ScoreManager>();
         SetUp();
-
+        currentState = GameState.pause;
 
     }
 
     private void Awake()
     {
-        if(world != null)
+        if (world != null)
         {
-            if(world.levels[level] != null)
+            if (level < world.levels.Length)
             {
-                width = world.levels[level].width;
-                height = world.levels[level].height;
-                dots = world.levels[level].dots;
-                scoreGoals = world.levels[level].scoreGoals;
-                boardLayout = world.levels[level].boardLayout;
+                if (world.levels[level] != null)
+                {
+                    width = world.levels[level].width;
+                    height = world.levels[level].height;
+                    dots = world.levels[level].dots;
+                    scoreGoals = world.levels[level].scoreGoals;
+                    boardLayout = world.levels[level].boardLayout;
 
+                }
             }
 
         }
@@ -123,7 +129,7 @@ public class Board : MonoBehaviour
             if (boardLayout[i].tileKind == TileKind.Breakable)
             {
                 Vector2 tempPosition = new Vector2(boardLayout[i].x, boardLayout[i].y);
-                GameObject tile = Instantiate(breakableTilePrefab,tempPosition,Quaternion.identity);
+                GameObject tile = Instantiate(breakableTilePrefab, tempPosition, Quaternion.identity);
                 breakableTiles[boardLayout[i].x, boardLayout[i].y] = tile.GetComponent<BackgroundTile>();
             }
 
@@ -142,7 +148,7 @@ public class Board : MonoBehaviour
                 {
                     Vector2 tempPosition = new Vector2(i, j + offSet);
                     Vector2 tilePosition = new Vector2(i, j);
-                  
+
 
                     GameObject backgroundTile = Instantiate(titlePrefab, tilePosition, Quaternion.identity) as GameObject;
                     backgroundTile.transform.parent = this.transform;
@@ -177,11 +183,11 @@ public class Board : MonoBehaviour
         {
             for (int j = 0; j < height; j++)
             {
-                if (allDots[i, j] == null && !espacosEmBranco[i,j])
+                if (allDots[i, j] == null && !espacosEmBranco[i, j])
                 {
                     Vector2 tempPosition = new Vector2(i, j + offSet);
                     int dotToUse = Random.Range(0, dots.Length);
-                    
+
                     int maxIterations = 0;
 
                     while (MatchesAt(i, j, dots[dotToUse]) && maxIterations < 100)
@@ -237,14 +243,14 @@ public class Board : MonoBehaviour
 
             streakValue += 1;
             DestroyMatches();
-            yield return new WaitForSeconds(2*refilDelay);
-          
+            yield return new WaitForSeconds(2 * refilDelay);
+
         }
         findMatches.currentMatches.Clear();
         //Só pode se mover depois do tabuleiro terminar de preencher os vazios deixados por ter acertado
         streakValue = 1;
         currentDot = null;
-        yield return new WaitForSeconds(2*refilDelay);
+        yield return new WaitForSeconds(2 * refilDelay);
         if (IsDeadLocked())
         {
             StartCoroutine(ShuffleBoard());
@@ -461,7 +467,7 @@ public class Board : MonoBehaviour
 
             if (column > 1)
             {
-                if (allDots[column - 1, row] !=null  && allDots[column - 2, row] !=null)
+                if (allDots[column - 1, row] != null && allDots[column - 2, row] != null)
                 {
                     if (allDots[column - 1, row].tag == piece.tag && allDots[column - 2, row].tag == piece.tag)
                     {
@@ -560,11 +566,11 @@ public class Board : MonoBehaviour
             }
 
 
-            if(breakableTiles[column,row] != null)
+            if (breakableTiles[column, row] != null)
             {
 
                 breakableTiles[column, row].TakeDamage(1);
-                if(breakableTiles[column,row].hitPoints <= 0)
+                if (breakableTiles[column, row].hitPoints <= 0)
                 {
                     breakableTiles[column, row] = null;
                 }
@@ -579,12 +585,12 @@ public class Board : MonoBehaviour
                 goalManager.UpdateGoals();
 
             }
-            if(soundManager != null)
+            if (soundManager != null)
             {
                 soundManager.PlayRandomDestroyNoise();
 
             }
-            Instantiate(destroyEffect,allDots[column,row].transform.position,Quaternion.identity);
+            Instantiate(destroyEffect, allDots[column, row].transform.position, Quaternion.identity);
             Destroy(allDots[column, row]);
             allDots[column, row] = null;
             scoreManager.IncreaseScore(basePieceValue * streakValue);
@@ -622,13 +628,13 @@ public class Board : MonoBehaviour
         {
             for (int j = 0; j < height; j++)
             {
-                if(!espacosEmBranco[i,j] && allDots[i, j] == null)
+                if (!espacosEmBranco[i, j] && allDots[i, j] == null)
                 {
-                   
-                    for (int k = j+1; k < height; k++)
+
+                    for (int k = j + 1; k < height; k++)
                     {
-                        if(allDots[i,k] != null)
-                        { 
+                        if (allDots[i, k] != null)
+                        {
                             allDots[i, k].GetComponent<Dot>().row = j;
                             allDots[i, k] = null;
                             break;
