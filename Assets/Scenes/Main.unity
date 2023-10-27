@@ -783,8 +783,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1982482742}
-        m_TargetAssemblyTypeName: PanelController, Assembly-CSharp
+      - m_Target: {fileID: 2117422277}
+        m_TargetAssemblyTypeName: BackToSplash, Assembly-CSharp
         m_MethodName: Ok
         m_Mode: 1
         m_Arguments:
@@ -3658,8 +3658,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1982482742}
-        m_TargetAssemblyTypeName: PanelController, Assembly-CSharp
+      - m_Target: {fileID: 2117422277}
+        m_TargetAssemblyTypeName: BackToSplash, Assembly-CSharp
         m_MethodName: Ok
         m_Mode: 1
         m_Arguments:
@@ -3840,6 +3840,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2117422275}
   - component: {fileID: 2117422276}
+  - component: {fileID: 2117422277}
   m_Layer: 0
   m_Name: EndGameManager
   m_TagString: Untagged
@@ -3884,3 +3885,16 @@ MonoBehaviour:
     counterValue: 100
   currentCounterValue: 0
   timerSeconds: 0
+--- !u!114 &2117422277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2117422274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c0bd779b76d4d04b87abc48f0c184c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneToLoad: Splash

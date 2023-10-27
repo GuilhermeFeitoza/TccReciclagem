@@ -12,12 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7e5922253a4f4346a8a86840231aea4, type: 3}
   m_Name: Level 2
   m_EditorClassIdentifier: 
-  width: 0
-  height: 0
+  width: 3
+  height: 3
   boardLayout: []
-  dots: []
+  dots:
+  - {fileID: 8335995081330989181, guid: 59b89465a2855224886ab811d7bb9259, type: 3}
+  - {fileID: 6553071064566151155, guid: 13e048de22f2ef24990d221421a9ddc7, type: 3}
+  - {fileID: 830683597547536699, guid: ea818d91e6d942b459ab25effe134ff6, type: 3}
   scoreGoals: 
   endGameRequirements:
     gameType: 1
     counterValue: 20
-  levelGoals: []
+  levelGoals:
+  - numberNeeded: 10
+    numberCollected: 0
+    goalsSprite: {fileID: 21300000, guid: 7ab51d8542538dc4f90f75a70b9f589b, type: 3}
+    matchValue: RedDot

@@ -8,21 +8,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Menu.unity
     guid: 96074949a92b99743a64b16864ec2c68
-  - enabled: 0
-    path: Assets/AlpacaStudio_Menu_Template/Examples/Standalone.unity
-    guid: aff9aaf8d4c68984c9a5334437caafd0
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 1
-    path: Assets/Scenes/Level.unity
-    guid: ad0c6e4370f04e749883cca05c92a615
   - enabled: 1
     path: Assets/Scenes/Main.unity
     guid: 7f7f7d977333e314a9ed8ec38738468a
   - enabled: 1
-    path: Assets/Scenes/LevelComplete.unity
-    guid: 2b848e42ff6092a4fa39fd8915600876
+    path: Assets/Scenes/Splash.unity
+    guid: 458409cc01f3f474b807304779d69bd1
   m_configObjects:
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: fe8243e9eecbbed44baed3ae3471b5a4,
       type: 2}
